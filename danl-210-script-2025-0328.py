@@ -46,8 +46,6 @@ table = driver.find_element(By.XPATH, xpath_tab)
 nrow = table.find_elements(By.TAG_NAME, 'tr')
 
 
-
-
 # /html/body/div[1]/div[2]/div/div[4]/div/div[1]/div/table/tbody/tr[2]/td[1]
 # /html/body/div[1]/div[2]/div/div[4]/div/div[1]/div/table/tbody/tr[3]/td[1]
 # /html/body/div[1]/div[2]/div/div[4]/div/div[1]/div/table/tbody/tr[302]/td[1]
@@ -111,7 +109,9 @@ url = 'https://quotes.toscrape.com/'
 driver.get(url)
 
 while True:
-    next_btn = driver.find_element(By.CLASS_NAME, 'next')
+    
+    # this is not clickable, causing error
+    next_btn = driver.find_element(By.CLASS_NAME, 'next') 
     
     # if next btn exists, click it. otherwise, break the loop
     if next_btn != [] :
