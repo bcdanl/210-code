@@ -118,7 +118,5 @@ while True:
         next_btn.click()
     else:
         break
-    
-
 
 
