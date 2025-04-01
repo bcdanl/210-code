@@ -73,8 +73,8 @@ while True:
         break
     
     # time.sleep(3)
-    # s = random.uniform(1, 2)
-    # time.sleep(s)
+    s = random.uniform(2, 3)
+    time.sleep(s)
     
     
     
