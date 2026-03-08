@@ -92,7 +92,7 @@ df = pd.DataFrame(content)
 import requests  # to handle API requests
 import pandas as pd
 param_dicts = {
-  'api_key': '80657885ed24a6137d5f63590c0e5c4a', ## Change to your own key
+  'api_key': 'YOUR_API_KEY', ## Change to your own key
   'file_type': 'json',
   'series_id': 'GDPC1'    ## ID for US real GDP
 }
@@ -126,7 +126,7 @@ import requests  # to handle API requests
 import pandas as pd
 
 param_dicts = {
-  'api_key': '80657885ed24a6137d5f63590c0e5c4a', ## Change to your own key
+  'api_key': 'YOUR_API_KEY', ## Change to your own key
   'file_type': 'json',
   'series_id': 'GDPC1'    ## ID for US real GDP
 }
