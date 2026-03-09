@@ -145,8 +145,8 @@ for val in series_lst:
                             params= param_dicts)
     
     content = response.json()    
-    df['series_id'] = val
     df = pd.DataFrame( content['observations'] )
+    df['series_id'] = val
 
     
 
