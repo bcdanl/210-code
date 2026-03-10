@@ -1,11 +1,130 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar  9 11:17:49 2026
+Created on Mon Mar  9 09:53:17 2026
 
 @author: bchoe
 """
 
+import requests  # to handle API requests
+import json      # to parse JSON response data
+import pandas as pd
+param_dicts = {
+  'api_key': 'YOUR_API_KEY', ## Change to your own key
+  'file_type': 'json',
+  'series_id': 'GDPC1'    ## ID for US real GDP
+}
+
+url = "https://api.stlouisfed.org/"
+endpoint = "series/observations"
+api_endpoint = url + "fred/" + endpoint   # sum of strings
+response = requests.get(api_endpoint, params = param_dicts)
+
+# Convert JSON response to Python dictionary.
+content = response.json() 
+
+# Extract the "observations" list element.
+df = pd.DataFrame( content['observations'] )
+
+
+
+# %%
+# =============================================================================
+# Classwork 9 - Question 2
+# =============================================================================
+
+import requests  # to handle API requests
+import pandas as pd
+param_dicts = {
+  'api_key': 'YOUR_API_KEY', ## Change to your own key
+  'file_type': 'json',
+  'series_id': 'GDPC1'    ## ID for US real GDP
+}
+
+url = "https://api.stlouisfed.org/"
+endpoint = "series/observations"
+api_endpoint = url + "fred/" + endpoint   # sum of strings
+
+lst_series = ['GDPC1', 'UNRATE']
+df_all = pd.DataFrame()
+for val in lst_series:
+    
+    param_dicts['series_id'] = val
+    response = requests.get(api_endpoint, 
+                            params = param_dicts)
+
+    # Convert JSON response to Python dictionary.
+    content = response.json() 
+
+    # Extract the "observations" list element.
+    df = pd.DataFrame( content['observations'] )
+    df['series'] = val
+    
+    df_all = pd.concat([df_all, df], ignore_index=True)
+
+df_all.columns
+
+# df[ LIST ]
+df_all = df_all[ ['date', 'value', 'series'] ]
+
+
+
+
+# %%
+# =============================================================================
+# NY Times API
+# =============================================================================
+
+
+# Settings
+from pynytimes import NYTAPI
+
+# Initialize API with your key
+nyt = NYTAPI("YOUR_API_KEY", 
+             parse_dates=True)
+
+
+# Top Stories
+top_stories = nyt.top_stories()
+df_top_stories = pd.json_normalize(top_stories)
+
+
+
+# Get all the top stories from a specific category
+top_climate_stories = nyt.top_stories(section = "climate")
+df_top_climate_stories = pd.json_normalize(top_climate_stories)
+
+
+# Most Viewed
+most_viewed = nyt.most_viewed()
+df_most_viewed = pd.json_normalize(most_viewed)
+
+# Get most viewed articles of last 7 or 30 days
+most_viewed_week = nyt.most_viewed(days = 7)
+most_viewed_month = nyt.most_viewed(days = 30)
+
+
+from datetime import datetime
+
+# Define the date range()
+start = datetime(2025, 1, 1)
+end = datetime(2026, 2, 28)
+
+# Search articles related to climate within a date range
+# This returns only up to 10 articles.
+articles = nyt.article_search(
+    query="climate",
+    dates={"begin": start, 
+           "end": end},
+)
+
+df_articles = pd.json_normalize(articles)
+
+
+# %%
+# =============================================================================
+# Hidden API
+# =============================================================================
 import requests
 
 headers = {
